@@ -7,10 +7,11 @@
 # Events: Dragged, Clicked
 # KeyModifiers: Command, Option, Control, Shift
 # SkipConfig: No
-# RunsSandboxed: No
+# RunsSandboxed: Yes
 # Version: 1.1
 # MinDropzoneVersion: 4.0
 # OptionsNIB: ExtendedLogin
+# UniqueID: 85247204
 # OptionsTitle: Paperless-ngx Connection
 
 require 'net/http'
