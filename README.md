@@ -6,7 +6,7 @@ Drag files onto the action to upload them to your Paperless-ngx instance. Suppor
 
 ## Installation
 
-1. Download `Upload to Paperless.dzbundle`
+1. Download `Paperless-ngx.dzbundle`
 2. Double-click to install in Dropzone, or copy it to `~/Library/Application Support/Dropzone/Actions/`
 
 ## Configuration

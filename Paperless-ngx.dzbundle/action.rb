@@ -1,5 +1,5 @@
 # Dropzone Action Info
-# Name: Upload to Paperless
+# Name: Paperless-ngx
 # Description: Uploads documents to a Paperless-ngx server.\n\nServer - your Paperless URL (e.g. paperless.example.com)\nPort - only needed for non-default ports, otherwise leave blank\nUsername/Password - your Paperless credentials, OR enter "api" as username and your API token as password\nRemote Path and Root URL - leave blank (not used)
 # Handles: Files
 # Creator: Jason Learst
