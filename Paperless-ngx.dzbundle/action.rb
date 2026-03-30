@@ -4,7 +4,7 @@
 # Handles: Files
 # Creator: Jason Learst
 # URL: https://jasonlearst.com
-# Events: Dragged, Clicked
+# Events: Dragged, Clicked, TestConnection
 # KeyModifiers: Command, Option, Control, Shift
 # SkipConfig: No
 # RunsSandboxed: Yes
@@ -81,6 +81,45 @@ def clicked
   $dz.url(false)
 rescue => e
   $dz.fail("Error: #{e.message}")
+end
+
+def test_connection
+  username = ENV['username']
+  password = ENV['password']
+
+  if username.nil? || username.strip.empty? || password.nil? || password.strip.empty?
+    $dz.error("Configuration Error", "Username and password are required.")
+    return
+  end
+
+  uri = URI.parse("#{server_url}/api/documents/?page_size=1")
+  http = Net::HTTP.new(uri.host, uri.port)
+  http.use_ssl = (uri.scheme == "https")
+  http.open_timeout = 10
+  http.read_timeout = 10
+
+  request = Net::HTTP::Get.new(uri.request_uri)
+  if username.strip.downcase == "api"
+    request["Authorization"] = "Token #{password.strip}"
+  else
+    request.basic_auth(username.strip, password.strip)
+  end
+
+  response = http.request(request)
+
+  if response.code.to_i >= 200 && response.code.to_i < 300
+    $dz.alert("Connection Successful", "Successfully connected to Paperless-ngx at #{server_url}")
+  elsif response.code.to_i == 401 || response.code.to_i == 403
+    $dz.error("Authentication Failed", "Username or password incorrect.")
+  else
+    $dz.error("Connection Failed", "Server returned HTTP #{response.code}.")
+  end
+rescue Timeout::Error
+  $dz.error("Connection Failed", "Connection timed out. Check your server address and port.")
+rescue SocketError
+  $dz.error("Connection Failed", "Server not found. Check your server address.")
+rescue => e
+  $dz.error("Connection Failed", e.message)
 end
 
 def server_url
